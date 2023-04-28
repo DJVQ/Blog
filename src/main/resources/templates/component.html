@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang=zh-cn xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="row(tags, lv)">
+    <th:block th:each="tag:${tags}">
+        <tr>
+            <div th:style="|padding-left:${50*lv}px|">
+                <a th:href="|tag?tid=${tag.tid}|" class=tag-cloud-item th:text="${tag.t_name}" th:style="|font-size:${1+tag.a_nums/10}em|"></a>
+            </div>
+        </tr>
+        <td th:unless="${#lists.isEmpty(tag.children)}" th:insert="~{this::row(${tag.children}, ${lv+1})}"/>
+    </th:block>
+</th:block>
+
+</html>

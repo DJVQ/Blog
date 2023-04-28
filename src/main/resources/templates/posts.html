@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset=utf-8>
+  <meta name=theme-color content="#fff">
+  <meta name=viewport content="width=device-width,initial-scale=1">
+  <title>ycq的个人博客</title>
+  <link rel=stylesheet th:href="@{/css/global.css}">
+  <link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Noto+Serif+SC:wght@400;500;700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" media=print onload="this.media='all'">
+</head>
+<body>
+<div class=container>
+  <header th:replace="~{header.html}"></header>
+  <main class="main list" id=main>
+    <div class=main-inner>
+      <h1 class=list-title>Posts</h1>
+      <div class="content list-group" th:each="yearBlog:${blogs}">
+        <h2 class=list-year th:text="${yearBlog.key}"></h2>
+        <div class="content list-group" th:each="monthBlog:${yearBlog.value}">
+          <h3 class=list-month></h3>
+          <ul class=list-part th:each="blog:${monthBlog.value}">
+            <li class=list-item>
+              <a th:href="|blog?bid=${blog.bid}|" class=list-item-title th:text="${blog.title}"></a>
+              <time class=list-item-time th:text="${#dates.format(blog.createdAt, 'MM 月 dd 日 ')}"></time>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id=back-to-top class=back-to-top>
+    <a href=#>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up">
+        <path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/>
+      </svg>
+    </a>
+  </div>
+  <footer th:replace="~{footer.html}"></footer>
+</div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css integrity="sha256-gPJfuwTULrEAAcI3X4bALVU/2qBU+QY/TpoD3GO+Exw=" crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js type=module defer></script>
+<script th:src="@{js/index.js}"></script>
+<script th:src="@{js/global.js}"></script>
+</body>
+</html>

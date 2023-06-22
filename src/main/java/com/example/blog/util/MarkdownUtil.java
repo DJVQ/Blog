@@ -1,7 +1,6 @@
 package com.example.blog.util;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +38,7 @@ public class MarkdownUtil {
      */
     public static String markdownToHtmlExtensitons(String markdown){
         //h标题生成id
-        Set<Extension> headingAnchorExtensions = Collections.singleton(HeadingAnchorExtension.create());
+        Set<Extension> headingAnchorExtensions = Set.of(HeadingAnchorExtension.create());
         //转换table的HTML
         List<Extension> tableExtension = Arrays.asList(TablesExtension.create());
         Parser parser = Parser.builder()

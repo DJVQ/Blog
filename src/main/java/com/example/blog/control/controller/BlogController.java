@@ -8,7 +8,7 @@ import com.example.blog.control.Listener.blog.FileListenerFactory;
 import com.example.blog.control.service.TagService;
 import com.example.blog.data.entities.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +29,7 @@ public class BlogController {
     @Autowired
     private FileListenerFactory fileListenerFactory;
 
-     @RequestMapping("/")
+     @GetMapping("/")
      public ModelAndView getIndex() {
          ModelAndView modelAndView = new ModelAndView();
          String indexMd = FileUtil.readByLines(fileListenerFactory.getMonitorDir() + "/$index.md");
@@ -39,7 +39,7 @@ public class BlogController {
          return modelAndView;
      }
 
-    @RequestMapping("/ycq")
+    @GetMapping("/ycq")
     public ModelAndView getIndex1() {
         ModelAndView modelAndView = new ModelAndView();
         String indexMd = FileUtil.readByLines(fileListenerFactory.getMonitorDir() + "/$index.md");
@@ -49,8 +49,8 @@ public class BlogController {
         return modelAndView;
     }
 
-    @RequestMapping("/blog")
-    public ModelAndView getBlogMd(@RequestParam("bid") Long bid) {
+    @GetMapping("/blog")
+    public ModelAndView getBlogMd(@RequestParam Long bid) {
         Optional<Blog> blog = blogService.getBlogByBid(bid);
         ModelAndView modelAndView = new ModelAndView();
         String blogContent = FileUtil.readByLines(blog.get().getFullPath());
@@ -61,7 +61,7 @@ public class BlogController {
         return modelAndView;
     }
 
-    @RequestMapping("/posts")
+    @GetMapping("/posts")
     public ModelAndView getAllPosts() {
         Map<String, Map<String, List<Blog>>> blogs = blogService.getAllBlogsSortByTime();
         ModelAndView modelAndView = new ModelAndView();
@@ -70,7 +70,7 @@ public class BlogController {
         return modelAndView;
     }
 
-    @RequestMapping("/tags")
+    @GetMapping("/tags")
     public ModelAndView getAllTags() {
         List<Tag> tags = tagService.getSortTags();
         ModelAndView modelAndView = new ModelAndView();
@@ -79,8 +79,8 @@ public class BlogController {
         return modelAndView;
     }
 
-    @RequestMapping("/tag")
-    public ModelAndView getTagBlogs(@RequestParam("tid") Long tid) {
+    @GetMapping("/tag")
+    public ModelAndView getTagBlogs(@RequestParam Long tid) {
         List<Blog> blogs = blogService.getTagBlogsSortByTime(tid);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("blogs", blogs);
